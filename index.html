@@ -72,11 +72,18 @@
             color: white;
             font-weight: bold;
         }
-        #result {
+        #fechaHoraActual {
             margin-top: 20px;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             color: #00FF00;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #00FF00;
+            white-space: pre-line;
         }
         #claimText {
             margin-top: 20px;
@@ -118,6 +125,7 @@
             <div id="arrow"></div>
             <canvas id="canvas" width="400" height="400"></canvas>
         </div>
+        <div id="fechaHoraActual">📅 -- ⏰ --</div>
         <br>
         <button id="spin">🎰 GIRAR LA RULETA 🎰</button>
         <div id="result"></div>
@@ -145,6 +153,7 @@
     const userSection = document.getElementById("userSection");
     const wheelSection = document.getElementById("wheelSection");
     const userLabel = document.getElementById("userLabel");
+    const fechaHoraActual = document.getElementById("fechaHoraActual");
 
     const prizes = [
         "100% RECARGO", "SIN PREMIO", "200% RECARGO", "10% RECARGO",
@@ -155,7 +164,6 @@
     const segmentAngle = (2 * Math.PI) / numSegments;
     let startAngle = 0;
 
-    // Control para un solo giro por día con reinicio
     const today = new Date().toLocaleDateString();
     const lastSpinDate = localStorage.getItem("lastSpinDate");
     if (lastSpinDate !== today) {
@@ -206,7 +214,11 @@
             } else {
                 winSound.play();
                 const prizeText = `🎉 ¡GANASTE: ${prizes[prizeIndex]}! 🎉`;
-                result.textContent = prizeText;
+                const now = new Date();
+                const dateStr = now.toLocaleDateString();
+                const timeStr = now.toLocaleTimeString();
+                const fechaHora = `📅 ${dateStr} ⏰ ${timeStr}`;
+                result.textContent = `${prizeText}\n${fechaHora}`;
                 claimText.style.display = "block";
 
                 if (prizes[prizeIndex] !== "OTRO GIRO") {
@@ -236,6 +248,7 @@
         userLabel.textContent = `Usuario: ${username}`;
         userSection.style.display = "none";
         wheelSection.style.display = "block";
+        updateFechaHora(); // Mostrar fecha/hora al entrar
     });
 
     spinBtn.addEventListener("click", () => {
@@ -248,6 +261,16 @@
         const prizeIndex = weightedIndices[Math.floor(Math.random() * weightedIndices.length)];
         rotateWheel(spins, 5000, prizeIndex);
     });
+
+    // Actualizar fecha/hora en tiempo real
+    function updateFechaHora() {
+        setInterval(() => {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString();
+            const timeStr = now.toLocaleTimeString();
+            fechaHoraActual.textContent = `📅 ${dateStr} ⏰ ${timeStr}`;
+        }, 1000);
+    }
 </script>
 </body>
 </html>
