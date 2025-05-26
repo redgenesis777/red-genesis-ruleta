@@ -17,7 +17,7 @@
         h1 {
             font-size: 8vw;
             color: #FFCC00;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             font-weight: bold;
             font-family: 'Roboto Slab', serif;
         }
@@ -26,15 +26,15 @@
         }
         #usernameInput {
             padding: 10px;
-            font-size: 5vw;
+            font-size: 4vw;
             border-radius: 8px;
             border: 2px solid gold;
             width: 80%;
             margin-bottom: 10px;
         }
         #continueBtn, #spin {
-            padding: 12px 20px;
-            font-size: 5vw;
+            padding: 10px 20px;
+            font-size: 4vw;
             background-color: gold;
             color: black;
             border: none;
@@ -66,9 +66,7 @@
             height: auto;
         }
         #userLabel {
-            position: absolute;
-            top: 10px;
-            left: 10px;
+            margin-top: 10px;
             font-size: 4vw;
             color: white;
             font-weight: bold;
@@ -123,11 +121,11 @@
 
     <div id="wheelSection" style="display:none; position: relative;">
         <div id="userLabel"></div>
+        <div id="fechaHoraActual">📅 -- ⏰ --</div>
         <div class="container">
             <div id="arrow"></div>
             <canvas id="canvas" width="400" height="400"></canvas>
         </div>
-        <div id="fechaHoraActual">📅 -- ⏰ --</div>
         <br>
         <button id="spin">🎰 GIRAR LA RULETA 🎰</button>
         <div id="result"></div>
@@ -250,7 +248,7 @@
         userLabel.textContent = `Usuario: ${username}`;
         userSection.style.display = "none";
         wheelSection.style.display = "block";
-        updateFechaHora(); // Mostrar fecha/hora al entrar
+        updateFechaHora();
     });
 
     spinBtn.addEventListener("click", () => {
