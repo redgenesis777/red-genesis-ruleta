@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>RED GENESIS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -10,29 +11,30 @@
             color: #fff;
             font-family: Arial, sans-serif;
             text-align: center;
-            padding: 20px;
+            padding: 10px;
             margin: 0;
         }
         h1 {
-            font-size: 48px;
+            font-size: 8vw;
             color: #FFCC00;
             margin-bottom: 20px;
             font-weight: bold;
             font-family: 'Roboto Slab', serif;
         }
         #userSection, #wheelSection {
-            margin-top: 30px;
+            margin-top: 20px;
         }
         #usernameInput {
             padding: 10px;
-            font-size: 18px;
+            font-size: 5vw;
             border-radius: 8px;
             border: 2px solid gold;
+            width: 80%;
             margin-bottom: 10px;
         }
         #continueBtn, #spin {
-            padding: 12px 25px;
-            font-size: 20px;
+            padding: 12px 20px;
+            font-size: 5vw;
             background-color: gold;
             color: black;
             border: none;
@@ -40,68 +42,68 @@
             cursor: pointer;
             margin-top: 10px;
             font-weight: bold;
+            width: 80%;
         }
         .container {
             display: inline-block;
             position: relative;
+            width: 90vw;
+            max-width: 400px;
         }
         #arrow {
             width: 0;
             height: 0;
-            border-left: 25px solid transparent;
-            border-right: 25px solid transparent;
-            border-top: 40px solid red;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 30px solid red;
             position: absolute;
-            top: -40px;
+            top: -30px;
             left: 50%;
             transform: translateX(-50%);
         }
-        #wheel {
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            border: 12px solid gold;
-            overflow: hidden;
-            box-shadow: 0 0 30px gold;
+        canvas {
+            width: 100%;
+            height: auto;
         }
         #userLabel {
             position: absolute;
-            top: 50px;
-            left: 30px;
-            font-size: 18px;
+            top: 10px;
+            left: 10px;
+            font-size: 4vw;
             color: white;
             font-weight: bold;
         }
         #fechaHoraActual {
-            margin-top: 20px;
-            font-size: 20px;
+            margin-top: 10px;
+            font-size: 4vw;
             font-weight: bold;
             color: #00FF00;
         }
         #result {
             margin-top: 20px;
-            font-size: 20px;
+            font-size: 4vw;
             font-weight: bold;
             color: #00FF00;
             white-space: pre-line;
         }
         #claimText {
             margin-top: 20px;
-            font-size: 16px;
+            font-size: 4vw;
             color: #FFCC00;
             font-weight: bold;
             display: none;
         }
         #contactBox {
-            margin-top: 30px;
+            margin-top: 20px;
             background-color: #fff;
             color: black;
             padding: 10px;
             border-radius: 10px;
-            width: 300px;
+            width: 80%;
             margin-left: auto;
             margin-right: auto;
             box-shadow: 0 0 10px #FFCC00;
+            font-size: 4vw;
         }
         #contactBox a {
             color: #FF0000;
@@ -188,8 +190,8 @@
             ctx.translate(200, 200);
             ctx.rotate(startAngle + (i + 0.5) * segmentAngle);
             ctx.fillStyle = "black";
-            ctx.font = "bold 18px Arial";
-            ctx.fillText(prizes[i], 60, 0);
+            ctx.font = "bold 14px Arial";
+            ctx.fillText(prizes[i], 50, 0);
             ctx.restore();
         }
     }
@@ -207,7 +209,7 @@
             const elapsed = timestamp - start;
             const progress = Math.min(elapsed / duration, 1);
             startAngle = totalRotation * easeOutCubic(progress);
-            ctx.clearRect(0, 0, 400, 400);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawWheel();
             if (progress < 1) {
                 requestAnimationFrame(animate);
@@ -262,7 +264,6 @@
         rotateWheel(spins, 5000, prizeIndex);
     });
 
-    // Actualizar fecha/hora en tiempo real
     function updateFechaHora() {
         setInterval(() => {
             const now = new Date();
