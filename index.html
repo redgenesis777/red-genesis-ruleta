@@ -132,144 +132,151 @@
         <div id="claimText">📸 RECLAMÁ TU RECOMPENSA MANDANDO LA CAPTURA AL WHATSAPP</div>
     </div>
 
-<audio id="spinSound" src="https://www.soundjay.com/misc/sounds/slot-machine-1.mp3"></audio>
-<audio id="winSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-01.mp3"></audio>
+    <audio id="spinSound" src="https://www.soundjay.com/misc/sounds/slot-machine-1.mp3"></audio>
+    <audio id="winSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-01.mp3"></audio>
 
-<div id="contactBox">
-    <p><strong>RED GENESIS</strong><br>La única red online de Argentina que te asegura el 100% del premio</p>
-    <p><a href="https://hoo.be/redgenesis">📲 CONTACTANOS AQUÍ</a></p>
-</div>
+    <div id="contactBox">
+        <p><strong>RED GENESIS</strong><br>La única red online de Argentina que te asegura el 100% del premio</p>
+        <p><a href="https://hoo.be/redgenesis">📲 CONTACTANOS AQUÍ</a></p>
+    </div>
 
-<script>
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    const spinBtn = document.getElementById("spin");
-    const result = document.getElementById("result");
-    const claimText = document.getElementById("claimText");
-    const spinSound = document.getElementById("spinSound");
-    const winSound = document.getElementById("winSound");
-    const usernameInput = document.getElementById("usernameInput");
-    const continueBtn = document.getElementById("continueBtn");
-    const userSection = document.getElementById("userSection");
-    const wheelSection = document.getElementById("wheelSection");
-    const userLabel = document.getElementById("userLabel");
-    const fechaHoraActual = document.getElementById("fechaHoraActual");
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spin");
+        const result = document.getElementById("result");
+        const claimText = document.getElementById("claimText");
+        const spinSound = document.getElementById("spinSound");
+        const winSound = document.getElementById("winSound");
+        const usernameInput = document.getElementById("usernameInput");
+        const continueBtn = document.getElementById("continueBtn");
+        const userSection = document.getElementById("userSection");
+        const wheelSection = document.getElementById("wheelSection");
+        const userLabel = document.getElementById("userLabel");
+        const fechaHoraActual = document.getElementById("fechaHoraActual");
 
-    const prizes = [
-        "100% RECARGO", "SIN PREMIO", "200% RECARGO", "10% RECARGO",
-        "10.000 GRATIS", "OTRO GIRO", "50% RECARGO", "2.000 GRATIS"
-    ];
-    const colors = ["#FFD700", "#555", "#8A2BE2", "#FF69B4", "#FF4500", "#00BFFF", "#32CD32", "#FFA500"];
-    const numSegments = prizes.length;
-    const segmentAngle = (2 * Math.PI) / numSegments;
-    let startAngle = 0;
+        const prizes = [
+            "100% RECARGO", "SIN PREMIO", "200% RECARGO", "10% RECARGO",
+            "10.000 GRATIS", "OTRO GIRO", "50% RECARGO", "2.000 GRATIS"
+        ];
+        const colors = ["#FFD700", "#555", "#8A2BE2", "#FF69B4", "#FF4500", "#00BFFF", "#32CD32", "#FFA500"];
+        const numSegments = prizes.length;
+        const segmentAngle = (2 * Math.PI) / numSegments;
+        let startAngle = 0;
 
-    const today = new Date().toLocaleDateString();
-    const lastSpinDate = localStorage.getItem("lastSpinDate");
-    if (lastSpinDate !== today) {
-        localStorage.setItem("lastSpinDate", today);
-        localStorage.removeItem("hasSpun");
-    }
-    let hasSpun = localStorage.getItem("hasSpun") === "true";
-
-    const weightedIndices = [
-        ...Array(6).fill(0), ...Array(16).fill(1), ...Array(3).fill(2), ...Array(16).fill(3),
-        ...Array(10).fill(4), ...Array(16).fill(5), ...Array(15).fill(6), ...Array(18).fill(7)
-    ];
-
-    function drawWheel() {
-        for (let i = 0; i < numSegments; i++) {
-            ctx.beginPath();
-            ctx.moveTo(200, 200);
-            ctx.arc(200, 200, 200, startAngle + i * segmentAngle, startAngle + (i + 1) * segmentAngle);
-            ctx.fillStyle = colors[i];
-            ctx.fill();
-            ctx.save();
-            ctx.translate(200, 200);
-            ctx.rotate(startAngle + (i + 0.5) * segmentAngle);
-            ctx.fillStyle = "black";
-            ctx.font = "bold 14px Arial";
-            ctx.fillText(prizes[i], 50, 0);
-            ctx.restore();
+        const today = new Date().toLocaleDateString();
+        const lastSpinDate = localStorage.getItem("lastSpinDate");
+        if (lastSpinDate !== today) {
+            localStorage.setItem("lastSpinDate", today);
+            localStorage.removeItem("hasSpun");
         }
-    }
+        let hasSpun = localStorage.getItem("hasSpun") === "true";
 
-    function rotateWheel(spins, duration, prizeIndex) {
-        let start = null;
-        const segmentMiddleAngle = prizeIndex * segmentAngle + segmentAngle / 2;
-        const targetAngle = (3 * Math.PI / 2) - segmentMiddleAngle;
-        const totalRotation = spins * 2 * Math.PI + targetAngle;
+        // NUEVAS PROBABILIDADES
+        const weightedIndices = [
+            ...Array(2).fill(0),   // 2%
+            ...Array(25).fill(1),  // 25%
+            ...Array(1).fill(2),   // 1%
+            ...Array(25).fill(3),  // 25%
+            ...Array(1).fill(4),   // 1%
+            ...Array(1).fill(5),   // 1%
+            ...Array(20).fill(6),  // 20%
+            ...Array(25).fill(7)   // 25%
+        ];
 
-        spinSound.play();
+        function drawWheel() {
+            for (let i = 0; i < numSegments; i++) {
+                ctx.beginPath();
+                ctx.moveTo(200, 200);
+                ctx.arc(200, 200, 200, startAngle + i * segmentAngle, startAngle + (i + 1) * segmentAngle);
+                ctx.fillStyle = colors[i];
+                ctx.fill();
+                ctx.save();
+                ctx.translate(200, 200);
+                ctx.rotate(startAngle + (i + 0.5) * segmentAngle);
+                ctx.fillStyle = "black";
+                ctx.font = "bold 14px Arial";
+                ctx.fillText(prizes[i], 50, 0);
+                ctx.restore();
+            }
+        }
 
-        function animate(timestamp) {
-            if (!start) start = timestamp;
-            const elapsed = timestamp - start;
-            const progress = Math.min(elapsed / duration, 1);
-            startAngle = totalRotation * easeOutCubic(progress);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawWheel();
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else {
-                winSound.play();
-                const prizeText = `🎉 ¡GANASTE: ${prizes[prizeIndex]}! 🎉`;
+        function rotateWheel(spins, duration, prizeIndex) {
+            let start = null;
+            const segmentMiddleAngle = prizeIndex * segmentAngle + segmentAngle / 2;
+            const targetAngle = (3 * Math.PI / 2) - segmentMiddleAngle;
+            const totalRotation = spins * 2 * Math.PI + targetAngle;
+
+            spinSound.play();
+
+            function animate(timestamp) {
+                if (!start) start = timestamp;
+                const elapsed = timestamp - start;
+                const progress = Math.min(elapsed / duration, 1);
+                startAngle = totalRotation * easeOutCubic(progress);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawWheel();
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    winSound.play();
+                    const prizeText = `🎉 ¡GANASTE: ${prizes[prizeIndex]}! 🎉`;
+                    const now = new Date();
+                    const dateStr = now.toLocaleDateString();
+                    const timeStr = now.toLocaleTimeString();
+                    const fechaHora = `📅 ${dateStr} ⏰ ${timeStr}`;
+                    result.textContent = `${prizeText}\n${fechaHora}`;
+                    claimText.style.display = "block";
+
+                    if (prizes[prizeIndex] !== "OTRO GIRO") {
+                        localStorage.setItem("hasSpun", "true");
+                        hasSpun = true;
+                    } else {
+                        hasSpun = false;
+                        localStorage.removeItem("hasSpun");
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        function easeOutCubic(t) {
+            return 1 - Math.pow(1 - t, 3);
+        }
+
+        drawWheel();
+
+        continueBtn.addEventListener("click", () => {
+            const username = usernameInput.value.trim();
+            if (!username) {
+                alert("Por favor ingresá tu usuario.");
+                return;
+            }
+            userLabel.textContent = `Usuario: ${username}`;
+            userSection.style.display = "none";
+            wheelSection.style.display = "block";
+            updateFechaHora();
+        });
+
+        spinBtn.addEventListener("click", () => {
+            if (hasSpun) {
+                result.textContent = "🚫 SOLO SE PUEDE GIRAR UNA VEZ POR DÍA (a menos que toque OTRO GIRO).";
+                return;
+            }
+            result.textContent = "🎲 GIRANDO...";
+            const spins = Math.floor(Math.random() * 3) + 3;
+            const prizeIndex = weightedIndices[Math.floor(Math.random() * weightedIndices.length)];
+            rotateWheel(spins, 5000, prizeIndex);
+        });
+
+        function updateFechaHora() {
+            setInterval(() => {
                 const now = new Date();
                 const dateStr = now.toLocaleDateString();
                 const timeStr = now.toLocaleTimeString();
-                const fechaHora = `📅 ${dateStr} ⏰ ${timeStr}`;
-                result.textContent = `${prizeText}\n${fechaHora}`;
-                claimText.style.display = "block";
-
-                if (prizes[prizeIndex] !== "OTRO GIRO") {
-                    localStorage.setItem("hasSpun", "true");
-                    hasSpun = true;
-                } else {
-                    hasSpun = false;
-                    localStorage.removeItem("hasSpun");
-                }
-            }
+                fechaHoraActual.textContent = `📅 ${dateStr} ⏰ ${timeStr}`;
+            }, 1000);
         }
-        requestAnimationFrame(animate);
-    }
-
-    function easeOutCubic(t) {
-        return 1 - Math.pow(1 - t, 3);
-    }
-
-    drawWheel();
-
-    continueBtn.addEventListener("click", () => {
-        const username = usernameInput.value.trim();
-        if (!username) {
-            alert("Por favor ingresá tu usuario.");
-            return;
-        }
-        userLabel.textContent = `Usuario: ${username}`;
-        userSection.style.display = "none";
-        wheelSection.style.display = "block";
-        updateFechaHora();
-    });
-
-    spinBtn.addEventListener("click", () => {
-        if (hasSpun) {
-            result.textContent = "🚫 SOLO SE PUEDE GIRAR UNA VEZ POR DÍA (a menos que toque OTRO GIRO).";
-            return;
-        }
-        result.textContent = "🎲 GIRANDO...";
-        const spins = Math.floor(Math.random() * 3) + 3;
-        const prizeIndex = weightedIndices[Math.floor(Math.random() * weightedIndices.length)];
-        rotateWheel(spins, 5000, prizeIndex);
-    });
-
-    function updateFechaHora() {
-        setInterval(() => {
-            const now = new Date();
-            const dateStr = now.toLocaleDateString();
-            const timeStr = now.toLocaleTimeString();
-            fechaHoraActual.textContent = `📅 ${dateStr} ⏰ ${timeStr}`;
-        }, 1000);
-    }
-</script>
+    </script>
 </body>
 </html>
