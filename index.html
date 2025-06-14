@@ -1,282 +1,288 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>RED GENESIS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-color: #0A0A0A;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 10px;
-            margin: 0;
-        }
-        h1 {
-            font-size: 8vw;
-            color: #FFCC00;
-            margin-bottom: 10px;
-            font-weight: bold;
-            font-family: 'Roboto Slab', serif;
-        }
-        #userSection, #wheelSection {
-            margin-top: 20px;
-        }
-        #usernameInput {
-            padding: 10px;
-            font-size: 4vw;
-            border-radius: 8px;
-            border: 2px solid gold;
-            width: 80%;
-            margin-bottom: 10px;
-        }
-        #continueBtn, #spin {
-            padding: 10px 20px;
-            font-size: 4vw;
-            background-color: gold;
-            color: black;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            margin-top: 10px;
-            font-weight: bold;
-            width: 80%;
-        }
-        .container {
-            display: inline-block;
-            position: relative;
-            width: 90vw;
-            max-width: 400px;
-        }
-        #arrow {
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 30px solid red;
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        canvas {
-            width: 100%;
-            height: auto;
-        }
-        #userLabel {
-            margin-top: 10px;
-            font-size: 4vw;
-            color: white;
-            font-weight: bold;
-        }
-        #fechaHoraActual {
-            margin-top: 10px;
-            font-size: 4vw;
-            font-weight: bold;
-            color: #00FF00;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 4vw;
-            font-weight: bold;
-            color: #00FF00;
-            white-space: pre-line;
-        }
-        #claimText {
-            margin-top: 20px;
-            font-size: 4vw;
-            color: #FFCC00;
-            font-weight: bold;
-            display: none;
-        }
-        #contactBox {
-            margin-top: 20px;
-            background-color: #fff;
-            color: black;
-            padding: 10px;
-            border-radius: 10px;
-            width: 80%;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 0 10px #FFCC00;
-            font-size: 4vw;
-        }
-        #contactBox a {
-            color: #FF0000;
-            font-weight: bold;
-            text-decoration: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RED GENESIS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #000000, #111);
+      color: #fff;
+      font-family: 'Arial Black', sans-serif;
+      text-align: center;
+    }
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+    }
+    h1 {
+      color: #FFD700;
+      font-size: 4rem;
+      margin: 2rem 0 1rem 0;
+      text-shadow: 2px 2px 4px #00000088;
+      font-family: 'Roboto Slab', serif;
+    }
+    input {
+      width: 90%;
+      padding: 1rem;
+      font-size: 1.2rem;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 2px solid #555;
+      text-align: center;
+      background-color: #222;
+      color: #fff;
+    }
+    input.input-error {
+      border: 3px solid red;
+    }
+    button {
+      background-color: #FFD700;
+      color: black;
+      font-size: 1.3rem;
+      font-weight: bold;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 10px;
+      margin: 1rem 0;
+      cursor: pointer;
+      box-shadow: 2px 2px 6px #00000088;
+    }
+    #resultBox {
+      color: #fff;
+      padding: 1rem;
+      margin: 1rem auto;
+      width: 90%;
+      max-width: 500px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    #claimTextBox {
+      background-color: #fff;
+      color: #000;
+      padding: 1rem;
+      margin: 1rem auto;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 2px 2px 6px #00000088;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .whatsapp {
+      background-color: #444;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 1rem;
+      box-shadow: 2px 2px 6px #00000088;
+    }
+    canvas {
+      width: 80vw;
+      max-width: 360px;
+      height: auto;
+      border: 8px solid #FFD700;
+      border-radius: 50%;
+      margin: 1rem auto;
+      display: block;
+      background-color: #111;
+    }
+    #arrow {
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-top: 25px solid red;
+      margin: auto;
+    }
+    #fechaHoraActual, #userLabel, #casinoHeader {
+      font-weight: bold;
+      margin: 10px 0;
+      color: #fff;
+    }
+    #casinoHeader {
+      font-size: 2rem;
+      color: #FFD700;
+      text-shadow: 1px 1px 2px #00000066;
+    }
+    #footer {
+      color: #888;
+      font-size: 0.8rem;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
-    <h1>RED GENESIS</h1>
-
+  <div class="container">
     <div id="userSection">
-        <input id="usernameInput" type="text" placeholder="Ingresá tu usuario">
-        <br>
-        <button id="continueBtn">CONTINUAR</button>
+      <h1>RED GENESIS</h1>
+      <input id="usernameInput" placeholder="INGRESÁ TU USUARIO">
+      <button onclick="startGame()">CONTINUAR</button>
+      <div class="claimTextBox" style="margin-top: 0.8rem; border: 2px solid #FFD700; border-radius: 15px; padding: 0.8rem;">
+        <div style="font-size: 1.3rem; font-weight: bold;">RED GENESIS</div>
+        <div style="margin: 5px 0;">La única red online de Argentina que te asegura el 100% del premio</div>
+        <a class="whatsapp" style="margin-top: 5px;" href="https://hoo.be/redgenesis" target="_blank">📱 CONTACTO</a>
+      </div>
     </div>
 
-    <div id="wheelSection" style="display:none; position: relative;">
-        <div id="userLabel"></div>
-        <div id="fechaHoraActual">📅 -- ⏰ --</div>
-        <div class="container">
-            <div id="arrow"></div>
-            <canvas id="canvas" width="400" height="400"></canvas>
-        </div>
-        <br>
-        <button id="spin">🎰 GIRAR LA RULETA 🎰</button>
-        <div id="result"></div>
-        <div id="claimText">📸 RECLAMÁ TU RECOMPENSA MANDANDO LA CAPTURA AL WHATSAPP</div>
+    <div id="wheelSection" style="display: none;">
+      <div id="casinoHeader">RED GENESIS</div>
+      <div id="userLabel"></div>
+      <div id="fechaHoraActual"></div>
+      <div id="arrow"></div>
+      <canvas id="canvas" width="500" height="500"></canvas>
+      <button id="spin">🎰 GIRAR LA RULETA 🎰</button>
+      <div id="resultBox"></div>
+      <div id="claimTextBox">📸 SACÁ CAPTURA Y RECLAMÁ TU PREMIO EN WHATSAPP</div>
+      <a class="whatsapp" href="https://hoo.be/redgenesis" target="_blank">📱 CONTACTO</a>
     </div>
 
-    <audio id="spinSound" src="https://www.soundjay.com/misc/sounds/slot-machine-1.mp3"></audio>
-    <audio id="winSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-01.mp3"></audio>
+    <div id="footer">Grupo Génesis © 2025. Todos los derechos reservados. Prohibida su duplicación o distribución sin autorización.</div>
+  </div>
 
-    <div id="contactBox">
-        <p><strong>RED GENESIS</strong><br>La única red online de Argentina que te asegura el 100% del premio</p>
-        <p><a href="https://hoo.be/redgenesis">📲 CONTACTANOS AQUÍ</a></p>
-    </div>
+  <audio id="spinSound" src="https://www.soundjay.com/misc/sounds/slot-machine-1.mp3"></audio>
+  <audio id="winSound" src="https://www.soundjay.com/human/sounds/applause-8.mp3"></audio>
 
-    <script>
-        const canvas = document.getElementById("canvas");
-        const ctx = canvas.getContext("2d");
-        const spinBtn = document.getElementById("spin");
-        const result = document.getElementById("result");
-        const claimText = document.getElementById("claimText");
-        const spinSound = document.getElementById("spinSound");
-        const winSound = document.getElementById("winSound");
-        const usernameInput = document.getElementById("usernameInput");
-        const continueBtn = document.getElementById("continueBtn");
-        const userSection = document.getElementById("userSection");
-        const wheelSection = document.getElementById("wheelSection");
-        const userLabel = document.getElementById("userLabel");
-        const fechaHoraActual = document.getElementById("fechaHoraActual");
+  <script>
+    const premios = [
+      { label: "200% BONI", color: "#FFFFFF", prob: 1 },
+      { label: "2.000 GRATIS", color: "#000000", prob: 25 },
+      { label: "100% BONI", color: "#FFFFFF", prob: 10 },
+      { label: "SIN PREMIO", color: "#000000", prob: 0 },
+      { label: "50.000 GRATIS", color: "#FFFFFF", prob: 0 },
+      { label: "5.000 GRATIS", color: "#000000", prob: 16 },
+      { label: "50% BONI", color: "#FFFFFF", prob: 18 },
+      { label: "20% BONI", color: "#000000", prob: 30 }
+    ];
 
-        const prizes = [
-            "100% RECARGO", "SIN PREMIO", "200% RECARGO", "10% RECARGO",
-            "10.000 GRATIS", "OTRO GIRO", "50% RECARGO", "2.000 GRATIS"
-        ];
-        const colors = ["#FFD700", "#555", "#8A2BE2", "#FF69B4", "#FF4500", "#00BFFF", "#32CD32", "#FFA500"];
-        const numSegments = prizes.length;
-        const segmentAngle = (2 * Math.PI) / numSegments;
-        let startAngle = 0;
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const radius = canvas.width / 2;
+    let username = "";
+    let isSpinning = false;
 
-        const today = new Date().toLocaleDateString();
-        const lastSpinDate = localStorage.getItem("lastSpinDate");
-        if (lastSpinDate !== today) {
-            localStorage.setItem("lastSpinDate", today);
-            localStorage.removeItem("hasSpun");
+    function drawWheel() {
+      const arc = 2 * Math.PI / premios.length;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.translate(radius, radius);
+      ctx.rotate(0);
+      ctx.translate(-radius, -radius);
+      for (let i = 0; i < premios.length; i++) {
+        const start = i * arc;
+        const end = start + arc;
+        ctx.beginPath();
+        ctx.moveTo(radius, radius);
+        ctx.fillStyle = premios[i].color;
+        ctx.arc(radius, radius, radius, start, end);
+        ctx.fill();
+        ctx.save();
+        ctx.translate(radius, radius);
+        ctx.rotate(start + arc / 2);
+        ctx.textAlign = "right";
+        ctx.fillStyle = premios[i].color === "#000000" ? "#FFFFFF" : "#000000";
+        ctx.font = "bold 28px Arial";
+        ctx.fillText(premios[i].label.toUpperCase(), radius - 10, 5);
+        ctx.restore();
+      }
+      ctx.restore();
+    }
+
+    function startGame() {
+      const input = document.getElementById("usernameInput");
+      username = input.value.trim();
+      if (!username) {
+        input.classList.add("input-error");
+        return;
+      }
+      input.classList.remove("input-error");
+      document.getElementById("userSection").style.display = "none";
+      document.getElementById("wheelSection").style.display = "block";
+      document.getElementById("userLabel").innerHTML = `<strong>USUARIO: ${username.toUpperCase()}</strong>`;
+      updateTime();
+      drawWheel();
+    }
+
+    function updateTime() {
+      const update = () => {
+        const now = new Date();
+        document.getElementById("fechaHoraActual").innerHTML = `📅 ${now.toLocaleDateString()} ⏰ ${now.toLocaleTimeString()}`;
+      };
+      update();
+      setInterval(update, 1000);
+    }
+
+    function yaGiroHoy() {
+      const hoy = new Date().toLocaleDateString();
+      return localStorage.getItem('ultimaFechaGiro') === hoy;
+    }
+
+    function guardarFechaGiro() {
+      const hoy = new Date().toLocaleDateString();
+      localStorage.setItem('ultimaFechaGiro', hoy);
+    }
+
+    document.getElementById("spin").addEventListener("click", () => {
+      if (yaGiroHoy()) {
+        alert("⚠️ Ya giraste la ruleta hoy. Volvé mañana para otro intento.");
+        return;
+      }
+
+      if (isSpinning) return;
+      isSpinning = true;
+      const spinButton = document.getElementById("spin");
+      spinButton.disabled = true;
+      spinButton.textContent = "🎰 GIRANDO...";
+
+      const resultBox = document.getElementById("resultBox");
+      resultBox.innerHTML = "";
+
+      const spinSound = document.getElementById("spinSound");
+      const winSound = document.getElementById("winSound");
+      spinSound.play();
+
+      let totalProb = premios.reduce((a, p) => a + p.prob, 0);
+      let rand = Math.random() * totalProb;
+      let acc = 0, selected = 0;
+      for (let i = 0; i < premios.length; i++) {
+        acc += premios[i].prob;
+        if (rand < acc) {
+          selected = i;
+          break;
         }
-        let hasSpun = localStorage.getItem("hasSpun") === "true";
+      }
 
-        // NUEVAS PROBABILIDADES
-        const weightedIndices = [
-            ...Array(2).fill(0),   // 2%
-            ...Array(25).fill(1),  // 25%
-            ...Array(1).fill(2),   // 1%
-            ...Array(25).fill(3),  // 25%
-            ...Array(1).fill(4),   // 1%
-            ...Array(1).fill(5),   // 1%
-            ...Array(20).fill(6),  // 20%
-            ...Array(25).fill(7)   // 25%
-        ];
+      const anglePerSlice = 360 / premios.length;
+      const offsetToTop = 270;
+      const degreesToRotate = 360 * 5 + (offsetToTop - (selected * anglePerSlice + anglePerSlice / 2));
 
-        function drawWheel() {
-            for (let i = 0; i < numSegments; i++) {
-                ctx.beginPath();
-                ctx.moveTo(200, 200);
-                ctx.arc(200, 200, 200, startAngle + i * segmentAngle, startAngle + (i + 1) * segmentAngle);
-                ctx.fillStyle = colors[i];
-                ctx.fill();
-                ctx.save();
-                ctx.translate(200, 200);
-                ctx.rotate(startAngle + (i + 0.5) * segmentAngle);
-                ctx.fillStyle = "black";
-                ctx.font = "bold 14px Arial";
-                ctx.fillText(prizes[i], 50, 0);
-                ctx.restore();
-            }
+      canvas.style.transition = "transform 6s cubic-bezier(0.25, 1, 0.5, 1)";
+      canvas.style.transform = `rotate(${degreesToRotate}deg)`;
+
+      setTimeout(() => {
+        const premio = premios[selected];
+        if (premio.label.includes("SIN PREMIO")) {
+          resultBox.innerHTML = `😞 NO GANASTE ESTA VEZ... ¡PROBÁ MAÑANA!`;
+        } else {
+          winSound.play();
+          resultBox.innerHTML = `🎉 <strong>¡FELICIDADES!</strong> GANASTE: <strong>${premio.label.toUpperCase()}</strong> 🎊`;
         }
-
-        function rotateWheel(spins, duration, prizeIndex) {
-            let start = null;
-            const segmentMiddleAngle = prizeIndex * segmentAngle + segmentAngle / 2;
-            const targetAngle = (3 * Math.PI / 2) - segmentMiddleAngle;
-            const totalRotation = spins * 2 * Math.PI + targetAngle;
-
-            spinSound.play();
-
-            function animate(timestamp) {
-                if (!start) start = timestamp;
-                const elapsed = timestamp - start;
-                const progress = Math.min(elapsed / duration, 1);
-                startAngle = totalRotation * easeOutCubic(progress);
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                drawWheel();
-                if (progress < 1) {
-                    requestAnimationFrame(animate);
-                } else {
-                    winSound.play();
-                    const prizeText = `🎉 ¡GANASTE: ${prizes[prizeIndex]}! 🎉`;
-                    const now = new Date();
-                    const dateStr = now.toLocaleDateString();
-                    const timeStr = now.toLocaleTimeString();
-                    const fechaHora = `📅 ${dateStr} ⏰ ${timeStr}`;
-                    result.textContent = `${prizeText}\n${fechaHora}`;
-                    claimText.style.display = "block";
-
-                    if (prizes[prizeIndex] !== "OTRO GIRO") {
-                        localStorage.setItem("hasSpun", "true");
-                        hasSpun = true;
-                    } else {
-                        hasSpun = false;
-                        localStorage.removeItem("hasSpun");
-                    }
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-
-        function easeOutCubic(t) {
-            return 1 - Math.pow(1 - t, 3);
-        }
-
-        drawWheel();
-
-        continueBtn.addEventListener("click", () => {
-            const username = usernameInput.value.trim();
-            if (!username) {
-                alert("Por favor ingresá tu usuario.");
-                return;
-            }
-            userLabel.textContent = `Usuario: ${username}`;
-            userSection.style.display = "none";
-            wheelSection.style.display = "block";
-            updateFechaHora();
-        });
-
-        spinBtn.addEventListener("click", () => {
-            if (hasSpun) {
-                result.textContent = "🚫 SOLO SE PUEDE GIRAR UNA VEZ POR DÍA (a menos que toque OTRO GIRO).";
-                return;
-            }
-            result.textContent = "🎲 GIRANDO...";
-            const spins = Math.floor(Math.random() * 3) + 3;
-            const prizeIndex = weightedIndices[Math.floor(Math.random() * weightedIndices.length)];
-            rotateWheel(spins, 5000, prizeIndex);
-        });
-
-        function updateFechaHora() {
-            setInterval(() => {
-                const now = new Date();
-                const dateStr = now.toLocaleDateString();
-                const timeStr = now.toLocaleTimeString();
-                fechaHoraActual.textContent = `📅 ${dateStr} ⏰ ${timeStr}`;
-            }, 1000);
-        }
-    </script>
+        isSpinning = false;
+        spinButton.disabled = false;
+        spinButton.textContent = "🎰 GIRAR LA RULETA 🎰";
+        guardarFechaGiro();
+      }, 6100);
+    });
+  </script>
 </body>
 </html>
